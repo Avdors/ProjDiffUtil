@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.itemAnimator = CustomItemAnimator()
 
         viewModel.items.observe(this, {items ->
             adapter.submitList((items))
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                 editor.putInt(getString(R.string.save_key), 1)
                 viewModel.updateItems(1)
             }
+            editor.apply()
 
         }
 

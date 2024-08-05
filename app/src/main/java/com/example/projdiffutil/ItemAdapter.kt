@@ -12,8 +12,17 @@ class ItemAdapter: ListAdapter<Item, ItemAdapter.ItemViewHolder>(DiffCallback())
 
 
     class ItemViewHolder(private val binding: ItemViewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Item){
-            binding.itemName.text = item.name
+        fun bind(item: Item, payloads: List<Any> = emptyList()){
+            if(payloads.isEmpty()) {
+                binding.itemName.text = item.name
+            }else{
+                payloads.forEach {payloads->
+                    if(payloads is String){
+                        binding.itemName.text = payloads
+                    }
+                }
+
+            }
         }
 
     }
@@ -28,6 +37,10 @@ class ItemAdapter: ListAdapter<Item, ItemAdapter.ItemViewHolder>(DiffCallback())
             // Используется для определения, имеют ли два элемента одинаковое содержание.
             return oldItem == newItem
         }
+        // добавляем PayLoad обновляем только измененные данные
+        override fun getChangePayload(oldItem: Item, newItem: Item): Any? {
+            return super.getChangePayload(oldItem, newItem)
+        }
 
     }
 
@@ -37,8 +50,12 @@ class ItemAdapter: ListAdapter<Item, ItemAdapter.ItemViewHolder>(DiffCallback())
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        onBindViewHolder(holder, position, emptyList())
+    }
+
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int, payloads: List<Any>) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, payloads)
     }
 
 

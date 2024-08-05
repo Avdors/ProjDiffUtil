@@ -32,8 +32,8 @@ class MainViewModel: ViewModel() {
 
     fun updateItems(random: Int) {
 
-        if(random == 2){
-            _items.value = listOf(
+
+            _items.value = if(random == 2){listOf(
                 Item(1, "Пример 1 обновлён"),
                 Item(2, "Пример 2"),
                 Item(4, "Пример 4"),
@@ -51,7 +51,7 @@ class MainViewModel: ViewModel() {
                 Item(16, "Пример 16 тоже изменили"),
             )
         } else {
-            _items.value = listOf(
+            listOf(
                 Item(1, "Пример 1 обновлён"),
                 Item(2, "Пример 2"),
                 Item(4, "Пример 4"),
