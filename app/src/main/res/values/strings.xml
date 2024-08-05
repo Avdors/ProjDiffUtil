@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ProjDiffUtil</string>
+    <string name="preference_key">preference_key</string>
+    <string name="save_key">save_key</string>
 </resources>

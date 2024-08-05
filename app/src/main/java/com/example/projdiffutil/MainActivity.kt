@@ -1,5 +1,7 @@
 package com.example.projdiffutil
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -8,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projdiffutil.databinding.ActivityMainBinding
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +30,19 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.btUpdate.setOnClickListener{
-            viewModel.updateItems()
+
+            val sharedPref = this.getSharedPreferences(
+                getString(R.string.preference_key), Context.MODE_PRIVATE)
+            val editor = sharedPref.edit();
+            val oldvalue = sharedPref.getInt(getString(R.string.save_key), 0)
+            if(oldvalue == 1){
+                editor.putInt(getString(R.string.save_key), 2)
+                viewModel.updateItems(2)
+            }else{
+                editor.putInt(getString(R.string.save_key), 1)
+                viewModel.updateItems(1)
+            }
+
         }
 
     }
