@@ -32,7 +32,8 @@ class MainViewModel: ViewModel() {
 
     fun updateItems(random: Int) {
 
-
+    // получается при первом нажатии мы видим изменение списка
+        // при втором нажатии если не видно 16 пример, список не меняется экран не моргает
             _items.value = if(random == 2){listOf(
                 Item(1, "Пример 1 обновлён"),
                 Item(2, "Пример 2"),
