@@ -37,7 +37,7 @@ class ItemAdapter: ListAdapter<Item, ItemAdapter.ItemViewHolder>(DiffCallback())
             // Используется для определения, имеют ли два элемента одинаковое содержание.
             return oldItem == newItem
         }
-        // добавляем PayLoad обновляем только измененные данные
+        // добавляем PayLoad обновляем только измененные данные  внутри одного Item
         override fun getChangePayload(oldItem: Item, newItem: Item): Any? {
             return super.getChangePayload(oldItem, newItem)
         }

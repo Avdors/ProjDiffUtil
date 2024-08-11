@@ -3,17 +3,22 @@ package com.example.projdiffutil
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projdiffutil.databinding.ActivityMainBinding
 import kotlin.random.Random
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
+    private lateinit var mDetector: GestureDetectorCompat
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
     private val adapter = ItemAdapter()
@@ -21,6 +26,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //для того чтобы обработать нажатия
+        mDetector = GestureDetectorCompat(this, this)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
@@ -47,5 +55,50 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return if(mDetector.onTouchEvent(event)){
+            true
+        } else{
+            super.onTouchEvent(event)
+        }
+
+    }
+
+    override fun onDown(e: MotionEvent): Boolean {
+        return true
+    }
+
+    override fun onShowPress(e: MotionEvent) {
+
+    }
+
+    override fun onSingleTapUp(e: MotionEvent): Boolean {
+        return true
+    }
+
+    override fun onScroll(
+        e1: MotionEvent?,
+        e2: MotionEvent,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
+        return true
+    }
+
+    override fun onLongPress(e: MotionEvent) {
+        Toast.makeText(this, "Длительное нажатие", Toast.LENGTH_SHORT).show()
+    }
+
+
+    // здесь обрабатываем скольжение
+    override fun onFling(
+        e1: MotionEvent?,
+        e2: MotionEvent,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        return true
     }
 }
